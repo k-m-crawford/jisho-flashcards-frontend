@@ -1,7 +1,8 @@
-import { Row, CardColumns } from "react-bootstrap"
+import { Row } from "react-bootstrap"
 import { useState } from 'react'
 import Masonry from "react-masonry-css";
-import WordCard from './wordcard'
+import WordSearchCard from './wordcard'
+import KanjiCard from './kanjicard'
 
 const SearchResults = ({hits}) => {
 
@@ -16,20 +17,29 @@ const SearchResults = ({hits}) => {
 
     return (
         <Row>
-        <Masonry
-        breakpointCols={breakpointColumnsObj}
-        className="masonry-grid"
-        >
-            {hits.map((hit, i) => 
-                <WordCard 
-                    active={activeCard} 
-                    setActiveCard={setActiveCard}
-                    key={hit.slug + Number(i)} 
-                    hit={hit} />
-            )}
-        </Masonry>
+        { hits.constructor === Array && hits.length > 0 &&
+            <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="masonry-grid"
+            >
+                {hits.map((hit, i) => 
+                    <WordSearchCard 
+                        active={activeCard} 
+                        setActiveCard={setActiveCard}
+                        key={hit.slug + Number(i)} 
+                        hit={hit}
+                        type={'word'} />
+                )}
+            </Masonry>
+        }
+        { hits.constructor !== Array && hits.found &&
+            <KanjiCard 
+            active={activeCard} 
+            setActiveCard={setActiveCard}
+            kanji={hits}
+            />
+        }
         </Row>
-
     )
 
 }

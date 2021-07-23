@@ -1,8 +1,7 @@
-import { Row } from "react-bootstrap"
 import { useState } from 'react'
 import Masonry from "react-masonry-css";
-import WordSearchCard from './wordcard'
-import KanjiCard from './kanjicard'
+import WordSearchCard from '../cards/wordcard'
+import KanjiCard from '../cards/kanjicard'
 
 const SearchResults = ({hits}) => {
 
@@ -16,7 +15,7 @@ const SearchResults = ({hits}) => {
       };
 
     return (
-        <Row>
+        <>
         { hits.constructor === Array && hits.length > 0 &&
             <Masonry
             breakpointCols={breakpointColumnsObj}
@@ -39,7 +38,7 @@ const SearchResults = ({hits}) => {
             kanji={hits}
             />
         }
-        </Row>
+        </>
     )
 
 }

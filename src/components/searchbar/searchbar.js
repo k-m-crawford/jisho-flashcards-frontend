@@ -4,7 +4,7 @@ import axios from 'axios'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import SearchResults from './searchresults'
-import Notification from './notification'
+import Notification from '../notification'
 
 const schema = Yup.object().shape({
   searchTerm: Yup.string().required()
@@ -20,8 +20,8 @@ const SearchBar = () => {
         setAlertText(null)
 
         const res = values.searchType === 'kanji' ? 
-            await axios.get('http://localhost:3001/kanji/' + values.searchTerm) 
-        :   await axios.get('http://localhost:3001/phrase/' + values.searchTerm) 
+            await axios.get(process.env.REACT_APP_API_URL+'kanji/' + values.searchTerm) 
+        :   await axios.get(process.env.REACT_APP_API_URL+'phrase/' + values.searchTerm) 
 
         
         if((values.searchType === 'word' && res.data.length === 0) || (values.searchType === 'kanji' && !res.data.found))
@@ -29,13 +29,12 @@ const SearchBar = () => {
 
         console.log(res)
         setHits(res.data)
-            
     }
 
     return (
     <>
     <Row>
-        <Col>
+        <Col md={{ span: 10, offset: 1}}>
             <Formik validationSchema={schema}
                     onSubmit={handleSearch}
                     initialValues={{
@@ -45,7 +44,7 @@ const SearchBar = () => {
             >
             { formik => (
                 <Form noValidate onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e) }}>
-                    <Form.Group className="my-3" controlId="formSearch">
+                    <Form.Group className="mt-2 mb-3" controlId="formSearch">
                     <Form.Label>Search a word or kanji.</Form.Label>
                     <Form.Control type="text" name="searchTerm" value={formik.values.searchTerm} onChange={formik.handleChange} />
                     <Button className="mt-2" variant="primary" type="submit">Search</Button>
@@ -55,12 +54,12 @@ const SearchBar = () => {
                 </Form>
             )}
             </Formik>
+
+            <Notification msg={alertText} flavour="danger" />
+
+            <SearchResults hits={hits} />
         </Col>
     </Row>
-
-    <Notification msg={alertText} flavour="danger" />
-
-    <SearchResults hits={hits} />
     </>
     )
 }

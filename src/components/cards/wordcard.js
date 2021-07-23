@@ -14,7 +14,7 @@ const WordCard = ({active, setActiveCard, hit}) => {
             >
                 <Card.Body>
                     <Card.Title>
-                        {hit.japanese[0].word} <StarToggle />
+                        {hit.japanese[0].word} <StarToggle cardInfo={hit} cardType="word" />
                     </Card.Title>
                     <Card.Subtitle style={{color:"white"}} className={"mb-2 " + subtitleColor}>{hit.japanese[0].reading}</Card.Subtitle>
                         

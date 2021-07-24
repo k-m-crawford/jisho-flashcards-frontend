@@ -3,3 +3,13 @@
   display: -ms-flexbox;
   display: flex;
 }
+
+.btn-jisho-green {
+  background-color: #56d926;
+  color: white;
+}
+
+.btn-jisho-gray { 
+  background-color: #5a5a5b;
+  color: white;
+}

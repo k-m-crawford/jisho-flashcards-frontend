@@ -30,7 +30,6 @@ const SearchBar = () => {
         if((values.searchType === "word" && res.data.length === 0) || (values.searchType === "kanji" && !res.data.found))
             setAlertText("No results found.")
 
-        console.log(res)
         setHits(res.data)
     }
 

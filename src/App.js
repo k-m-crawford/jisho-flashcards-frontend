@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import { Container, Row, Col, Spinner } from "react-bootstrap"
 import Home from "./components/pages/home"
 import ReviewPage from "./components/pages/reviewpage"
+import DecksPage from "./components/pages/decks"
 import LoginButton from "./components/users/loginbutton"
 import Header from "./components/header"
 import { useAuth0 } from "@auth0/auth0-react"
@@ -44,6 +45,9 @@ const App = () => {
                     <Switch>
                         <Route path="/review/:type">
                             <ReviewPage />
+                        </Route>
+                        <Route path="/decks">
+                            <DecksPage />
                         </Route>
                         <Route path="/">
                             <Home />

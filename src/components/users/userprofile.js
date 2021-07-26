@@ -23,7 +23,7 @@ const UserProfile = ({ badge }) => {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                        <Dropdown.Item>Decks</Dropdown.Item>
+                        <Dropdown.Item href="/decks">Decks</Dropdown.Item>
                         <Dropdown.Item>Profile</Dropdown.Item>
                         <Dropdown.Item onClick={(e) => { e.preventDefault(); logout({ returnTo: window.location.origin }) }}>
             Log Out

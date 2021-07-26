@@ -18,7 +18,7 @@ const ToReview = ({reviewType, color}) => {
             const res = await axios.get(process.env.REACT_APP_API_URL+"users/getReviews/all/" + reviewType + "/" + user["https://jisho-flashcards.namespace.com/username"])           
             if(res.status === 200){
 
-                const all = reviewType === "all" ? res.data.kanji.concat(res.data.words) : res.data
+                const all = reviewType === "all" ? res.data.reviews : res.data
 
                 let toReview = 0
                 all.forEach(review => {
@@ -51,11 +51,18 @@ const ToReview = ({reviewType, color}) => {
                         </Spinner>
                     )}
                     { count !== null && (
-                        <h1 style={{color: "white"}}>{count}</h1>
+                        <>
+                            <h1 style={{color: "white"}}>{count}</h1>
+                            { count !== 0 && (
+                                <Link to={`/review/${reviewType}`}>
+                                    <Button variant="outline-light" style={{width: "100%"}}>Review!</Button>
+                                </Link>
+                            )}
+                            { count === 0 && (
+                                <Button variant="outline-light" style={{width: "100%"}}>Done!</Button>
+                            )}
+                        </>
                     )}
-                    <Link to={`/review/${reviewType}`}>
-                        <Button variant="outline-light" style={{width: "100%"}}>Review!</Button>
-                    </Link>
                 </Card.Body>
 
                 <Card.Footer>

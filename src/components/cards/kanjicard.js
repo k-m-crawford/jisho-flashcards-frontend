@@ -1,32 +1,37 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import React from "react"
-import { Card, Col, ListGroup } from "react-bootstrap"
+import { Card, Col, Collapse } from "react-bootstrap"
+import KanjiCardBody from "./card-bodies/kanji-card-body"
 import StarToggle from "./startoggle"
 
-const KanjiCard = ({ kanji }) => {
+const KanjiCard = ({ kanji, active, setActiveCard }) => {
+
+    const isActive = active === kanji.query
+    const bg = isActive ? process.env.REACT_APP_KANJI_COLOUR : "white"
+    const col = isActive ? "white" : "black"
+    const subtitleColor = isActive ? "" : "text-muted"
+
     return (
         <Col className="mb-2 px-1">
-            <Card className="mx-auto">
-                <Card.Header style={{ float: "left" }}>
-                    <h5 className="my-auto" style={{ float: "left" }}>{kanji.query}</h5><StarToggle cardInfo={kanji} cardType="kanji" /><br />
-                    <h6 className="my-auto">{kanji.meaning}</h6>
-
-                </Card.Header>
+            <Card style={{ backgroundColor: bg, color: col }}
+                aria-controls="card-body-collapse"
+                aria-expanded={isActive}
+                onClick={() => isActive ? setActiveCard(-1) : setActiveCard(kanji.query)} 
+                className="mx-auto">
                 <Card.Body>
-                    <h5 className="my-auto" style={{ display: "inline" }}>Kun: </h5>
-                    { kanji.kunyomi.map((kun, i) => (
-                        <span className="mt-5" key={kun}>{kun + (i === kanji.kunyomi.length - 1 ? "" : ", ")}</span>
-                    ))}
-                    <br />
-                    <h5 className="my-auto" style={{ display: "inline" }}>On: </h5>
-                    { kanji.onyomi.map((on, i) => (
-                        <span className="mt-5" key={on}>{on + (i === kanji.onyomi.length - 1 ? "" : ", ")}</span>
-                    ))}
+                    <Card.Title>
+                        {kanji.query} <StarToggle cardInfo={kanji} cardType="kanji" />
+                    </Card.Title>
+                    <Card.Subtitle style={{color:"white"}} className={"mb-2 " + subtitleColor}>{kanji.meaning}</Card.Subtitle>
+
                 </Card.Body>
 
-                <ListGroup variant="flush">
-
-                </ListGroup>
+                <Collapse in={isActive}>
+                    <div id="card-body-collapse">
+                        <KanjiCardBody data={kanji} />
+                    </div>
+                </Collapse>
 
             </Card>
         </Col>

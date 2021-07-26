@@ -13,3 +13,25 @@
   background-color: #5a5a5b;
   color: white;
 }
+
+.jisho-green {
+  background-color: #56d926;
+  color: white;
+}
+
+.jisho-gray {
+  background-color: #5a5a5b;
+  color: white;
+}
+
+.btn-toggle-kanji {
+  background-color: yellow
+}
+
+.btn-toggle-kanji:checked:focus {
+  background-color: black
+}
+
+.toggle-word {
+  background-color: #8C007C
+}

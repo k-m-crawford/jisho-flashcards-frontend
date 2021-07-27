@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/react-in-jsx-scope */
-import { Alert } from "react-bootstrap"
+import { Alert} from "@material-ui/core"
 
 const Notification = ({msg, flavour}) => {
 
@@ -8,7 +8,7 @@ const Notification = ({msg, flavour}) => {
         <>
             { msg !== null && 
         
-            <Alert variant={flavour}>{msg}</Alert>
+            <Alert severity={flavour}>{msg}</Alert>
 
             }
         </>

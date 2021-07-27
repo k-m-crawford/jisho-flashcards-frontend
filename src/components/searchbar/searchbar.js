@@ -1,6 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useState } from "react"
-import { Form, Button } from "react-bootstrap"
+import { TextField, RadioGroup, FormControlLabel, Radio, Button, Grid } from "@material-ui/core"
 import axios from "axios"
 import { Formik } from "formik"
 import * as Yup from "yup"
@@ -38,24 +38,50 @@ const SearchBar = () => {
             <Formik validationSchema={schema}
                 onSubmit={handleSearch}
                 initialValues={{
-                    searchTerm: "Use English or Japanese characters.",
+                    searchTerm: "",
                     searchType: "kanji"
                 }}
             >
                 { formik => (
-                    <Form noValidate onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e) }}>
-                        <Form.Group className="mt-2 mb-3" controlId="formSearch">
-                            <Form.Label>Search a word or kanji.</Form.Label>
-                            <Form.Control type="text" name="searchTerm" value={formik.values.searchTerm} onChange={formik.handleChange} />
-                            <Button className="mt-2" variant="primary" type="submit">Search</Button>
-                            <Form.Check defaultChecked className="mx-4" inline type="radio" value="kanji" label="Kanji" onChange={formik.handleChange} name="searchType" />
-                            <Form.Check className="mx-4" inline type="radio" value="word" label="Word" onChange={formik.handleChange} name="searchType" />
-                        </Form.Group>
-                    </Form>
+                    <form noValidate autoComplete="off" onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e) }}>
+                        
+                        <Grid container spacing={1}>
+                            <Grid item xs={12} sm={10}>
+                                <TextField fullWidth
+                                    label="Search for review cards."
+                                    helperText="For kanji, input Japanese characters. For words, input either English or Japanese characters."
+                                    variant="standard"
+                                    id="searchTerm" 
+                                    value={formik.values.searchTerm} 
+                                    onChange={formik.handleChange} 
+                                />
+                            </Grid>
+                            <Grid item mt={1} xs={12} sm={2}>
+                                <Button my={1} variant="outlined" type="submit">Search</Button>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <RadioGroup row name="searchType" onChange={formik.handleChange} value={formik.values.searchType} >                       
+
+                                    <FormControlLabel value="kanji" label="Kanji" control={<Radio />} />
+                                    <FormControlLabel value="word" label="Word" control={<Radio />} />
+                                </RadioGroup>
+                            </Grid>
+                        
+                        </Grid>
+                    </form>
+                    // <Form noValidate onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e) }}>
+                    //     <Form.Group className="mt-2 mb-3" controlId="formSearch">
+                    //         <Form.Label>Search a word or kanji.</Form.Label>
+                    //         <Form.Control type="text" name="searchTerm" value={formik.values.searchTerm} onChange={formik.handleChange} />
+                    //         <Button className="mt-2" variant="primary" type="submit">Search</Button>
+                    //         <Form.Check defaultChecked className="mx-4" inline type="radio" value="kanji" label="Kanji" onChange={formik.handleChange} name="searchType" />
+                    //         <Form.Check className="mx-4" inline type="radio" value="word" label="Word" onChange={formik.handleChange} name="searchType" />
+                    //     </Form.Group>
+                    // </Form>
                 )}
             </Formik>
 
-            <Notification msg={alertText} flavour="danger" />
+            <Notification msg={alertText} flavour="error" />
 
             <SearchResults hits={hits} />
         </>

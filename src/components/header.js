@@ -1,17 +1,20 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { Row, Col, Image } from "react-bootstrap"
+import { Box, Grid } from "@material-ui/core"
 import UserProfile from "./users/userprofile"
 import logo from "../logo.png"
 
 const Header = () => (
-    <Row>
-        <Col className="my-2" xs={8} sm={6} lg={3}>
-            <Image src={logo} fluid />
-        </Col>
-        <Col className="py-3 mt-1" xs={{ span: 3, offset: 1 }} sm={{ span: 2, offset: 4 }} lg={{ span: 1, offset: 8 }} >
-            <UserProfile badge={true} />
-        </Col>
-    </Row>
+    <Box>
+        <Grid container mt={1} mb={2} sx={{ flexGrow: 1 }} spacing={2}>
+            <Grid item xs={8} sm={5} md={4}>
+                <img style={{width: "100%" }} src={logo} />
+            </Grid>
+            <Grid item xs={3} sm={6} md={7}></Grid>
+            <Grid item my="auto" xs={1} md={1} lg={1}>
+                <UserProfile badge={true} />
+            </Grid>
+        </Grid>
+    </Box>
 )
 
 export default Header

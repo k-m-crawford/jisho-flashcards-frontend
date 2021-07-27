@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
 /* eslint-disable react/react-in-jsx-scope */
-import { Col, Card, Spinner, Button } from "react-bootstrap"
+import { Grid, CircularProgress, Card, CardHeader, CardContent, Button, Typography } from "@material-ui/core"
 import { useAuth0 } from "@auth0/auth0-react"
 import axios from "axios"
 import { useEffect, useState } from "react"
@@ -39,38 +39,39 @@ const ToReview = ({reviewType, color}) => {
 
     return (
 
-        <Col className="mb-4" xs={12} md={4} lg={3}>
-            <Card style={{textAlign: "center"}}>
+        <Grid item xs={12} md={4}>
+            <Card elevation={4} sx={{textAlign: "center"}}>
+                <CardHeader title={reviewType.toUpperCase()} />
 
-                <Card.Header className="my-0 pt-3 pb-2"><h6>{reviewType.toUpperCase()}</h6></Card.Header>
-
-                <Card.Body style={{ backgroundColor: color }}>
+                <CardContent sx={{ backgroundColor: color }}>
                     { count === null && (
-                        <Spinner animation="border" role="status">
-                            <span className="visually-hidden">Counting ...</span>
-                        </Spinner>
+                        <CircularProgress />
                     )}
                     { count !== null && (
                         <>
-                            <h1 style={{color: "white"}}>{count}</h1>
+                            <Typography color="white" variant="h2">{count}</Typography>
                             { count !== 0 && (
-                                <Link to={`/review/${reviewType}`}>
-                                    <Button variant="outline-light" style={{width: "100%"}}>Review!</Button>
-                                </Link>
+                                <Button component={Link}
+                                    to={`/review/${reviewType}`} 
+                                    variant="outlined" 
+                                    sx={{width: "100%", color: "white", borderColor: "white"}}>
+                                            Review!
+                                </Button>
                             )}
                             { count === 0 && (
-                                <Button variant="outline-light" style={{width: "100%"}}>Done!</Button>
+                                <Button variant="outlined" 
+                                    color="default" 
+                                    style={{width: "100%"}}>
+                                        Done!
+                                </Button>
                             )}
                         </>
                     )}
-                </Card.Body>
 
-                <Card.Footer>
-                    <span className="footer-text">next reviews in </span>
-                </Card.Footer>
-
+                </CardContent>
+                <CardContent><span className="footer-text">next reviews in </span></CardContent>
             </Card>
-        </Col>
+        </Grid>
 
     )
 

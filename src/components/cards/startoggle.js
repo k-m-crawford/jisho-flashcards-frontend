@@ -2,23 +2,23 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faStar as starOutline } from "@fortawesome/free-regular-svg-icons"
-import { faStar as starFilled } from "@fortawesome/free-solid-svg-icons"
+import StarBorderIcon from "@material-ui/icons/StarBorder"
+import StarIcon from "@material-ui/icons/Star"
 import { useAuth0 } from "@auth0/auth0-react"
 import axios from "axios"
 
-const StarToggle = ({cardInfo, cardType}) => {
+const StarToggle = ({cardInfo}) => {
 
-    const [ isToggled, setIsToggled ] = useState(null)
+    const [ isToggled, setIsToggled ] = useState(false)
     const { user } = useAuth0()
-    const finalSlug = cardType === "kanji" ? cardInfo.query : cardInfo.slug
+    const cardType = cardInfo.query ? "kanji" : "word"
+    const finalSlug = cardInfo.query ? cardInfo.query : cardInfo.slug
 
     const setToggle = async () => {
         
         const curDate = new Date()
 
-        const obj = cardType === "kanji" ? 
+        const obj = cardInfo.query ? 
             {
                 "kanji": cardInfo.query,
                 "nextReview": new Date(curDate.getFullYear(), curDate.getMonth(), curDate.getDate(),
@@ -45,27 +45,24 @@ const StarToggle = ({cardInfo, cardType}) => {
 
     useEffect(() => {
         const main = async () => {
-            // eslint-disable-next-line no-undef
             const result = await axios.get(process.env.REACT_APP_API_URL+"users/checkReview/"+cardType+"/"+user["https://jisho-flashcards.namespace.com/username"]+"/"+finalSlug)
 
-            console.log("in effect ", result)
+            console.log(result)
 
             if(result.status === 200) 
                 setIsToggled(true)
-            else
-                setIsToggled(false)
                     
         }
         main()
-    }, [cardInfo])
+    }, [])
 
     return(
         <>
             { isToggled && (
-                <FontAwesomeIcon onClick={() => setToggle() } icon={starFilled} style={{float: "right"}} color="gold" />
+                <StarIcon sx={{mr: 1, color: "gold"}} onClick={() => setToggle() } />
             )}
             { !isToggled && (
-                <FontAwesomeIcon onClick={() => setToggle()} icon={starOutline} style={{float: "right"}} />
+                <StarBorderIcon sx={{mr: 1}} onClick={() => setToggle() }  color="gold" />
             )}
         </>
     )

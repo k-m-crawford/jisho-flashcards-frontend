@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/react-in-jsx-scope */
-import { Row, Col, Accordion } from "react-bootstrap"
+import { Grid, Accordion, AccordionSummary, AccordionDetails, Typography } from "@material-ui/core"
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import Header from "../header"
 import ToReview from "./toreview"
 import SearchBar from "../searchbar/searchbar"
@@ -8,25 +9,26 @@ import SearchBar from "../searchbar/searchbar"
 const Home = () => (
     <>
         <Header />
-        <Row className="justify-content-center">
+        <Grid container spacing={2} px={5} my={2} sx={{justifyContent: "center"}}>
             <ToReview reviewType="kanji" color={process.env.REACT_APP_KANJI_COLOUR}/>
             <ToReview reviewType="word" color={process.env.REACT_APP_WORD_COLOUR}  />
             <ToReview reviewType="all" color={process.env.REACT_APP_ALL_COLOUR} />
-        </Row>
-        <Row>
-            <Col className="mb-3" xs={12} lg={{ span: 10, offset: 1 }}>
+        </Grid>
+        <Grid container spacing={2} px={5} my={2} sx={{justifyContent: "center"}}>
+            <Grid item mb={3} xs={12} lg={12}>
                 <Accordion>
-                    <Accordion.Item eventKey="0">
-                        <Accordion.Header>
-                                                Search for Cards
-                        </Accordion.Header>
-                        <Accordion.Body>
-                            <SearchBar />
-                        </Accordion.Body>
-                    </Accordion.Item>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="search-panel"
+                        id="search-panel" >
+                        <Typography>Search for Review Cards.</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <SearchBar />
+                    </AccordionDetails>
                 </Accordion>
-            </Col>
-        </Row>
+            </Grid>
+        </Grid>
     </>
 )
 

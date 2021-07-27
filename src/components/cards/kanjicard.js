@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import React from "react"
-import { Card, Col, Collapse } from "react-bootstrap"
+import { Grid, Card, CardHeader, Collapse, Typography } from "@material-ui/core"
 import KanjiCardBody from "./card-bodies/kanji-card-body"
 import StarToggle from "./startoggle"
 
@@ -13,20 +13,17 @@ const KanjiCard = ({ kanji, active, setActiveCard }) => {
     const subtitleColor = isActive ? "" : "text-muted"
 
     return (
-        <Col className="mb-2 px-1">
-            <Card style={{ backgroundColor: bg, color: col }}
+        <Grid item sx={{mb: 2, px: 1}} >
+            <Card sx={{ backgroundColor: bg, color: col }}
                 aria-controls="card-body-collapse"
                 aria-expanded={isActive}
                 onClick={() => isActive ? setActiveCard(-1) : setActiveCard(kanji.query)} 
-                className="mx-auto">
-                <Card.Body>
-                    <Card.Title>
-                        {kanji.query} <StarToggle cardInfo={kanji} cardType="kanji" />
-                    </Card.Title>
-                    <Card.Subtitle style={{color:"white"}} className={"mb-2 " + subtitleColor}>{kanji.meaning}</Card.Subtitle>
-
-                </Card.Body>
-
+                className="mx-auto"
+            >   
+                <CardHeader title={kanji.query}
+                    subheader={<Typography sx={{color: subtitleColor}}>{kanji.meaning}</Typography>} 
+                    action={<StarToggle cardInfo={kanji} />}/>
+                  
                 <Collapse in={isActive}>
                     <div id="card-body-collapse">
                         <KanjiCardBody data={kanji} />
@@ -34,7 +31,7 @@ const KanjiCard = ({ kanji, active, setActiveCard }) => {
                 </Collapse>
 
             </Card>
-        </Col>
+        </Grid>
     )
 }
 

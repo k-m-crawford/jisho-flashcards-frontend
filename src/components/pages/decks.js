@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/react-in-jsx-scope */
-import { Row, Col, Spinner, Alert, ToggleButtonGroup, ToggleButton } from "react-bootstrap"
+import { Grid, CircularProgress, Alert, Link } from "@material-ui/core"
 import { useEffect, useState } from "react"
 import { useAuth0 } from "@auth0/auth0-react"
 import Header from "../header"
@@ -14,7 +14,8 @@ const DecksPage = () => {
 
     const [ cards, setCards ] = useState(null)
     const [ activeCard, setActiveCard ] = useState(null)
-    const [ filter, setFilter ] = useState([ "kanji", "words" ])
+    // const [ filter, setFilter ] = useState([ "kanji", "words" ])
+    const filter = ["kanji", "words"]
     const { user } = useAuth0()
     
     const breakpointColumnsObj = {
@@ -24,7 +25,7 @@ const DecksPage = () => {
         576: 1
     }
 
-    const changeFilter = (val) => setFilter(val)
+    // const changeFilter = (val) => setFilter(val)
 
     useEffect(() => {
 
@@ -38,75 +39,73 @@ const DecksPage = () => {
                 const ref = reviewSlugs[i].kanji ? reviewSlugs[i].kanji : reviewSlugs[i].wordSlug
                 const type = reviewSlugs[i].kanji ? "kanji" : "word"
                 const fullCard = await axios.get(process.env.REACT_APP_API_URL+"db/"+type+"/"+ref)
-                console.log(fullCard.data)
                 reviewCards.push(fullCard.data)
             }
-
-            console.log(reviewCards)
-
             setCards(reviewCards)
         }
 
         main()
 
-    }, [activeCard])
+    }, [])
 
     return (
         <>
             <Header />
+
+            { !cards && (
+                <Grid container sx={{textAlign:"center"}}>
+                    <Grid item  sx={{my: 5}} xs={12}>
+                        <CircularProgress />
+                    </Grid>
+                </Grid>
+            )}
             { cards && cards.length === 0 && (
-                <Row>
-                    <Col xs={12}>
-                        <Alert variant="danger" className="mt-2">No cards found. Get started by adding with the search bar on the <Alert.Link href="/">home screen</Alert.Link>.</Alert>
-                    </Col>
-                </Row>
+                <Grid container>
+                    <Grid item xs={12}>
+                        <Alert severity="warning" sx={{mt: 2}}>No cards found. Get started by adding with the search bar on the <Link color="inherit" href="/">home screen</Link>.</Alert>
+                    </Grid>
+                </Grid>
             )}
             { cards && cards.length > 0 && (
                 <>
-                    <Row className="mt-2 mb-4" style={{textAlign: "center"}}>
-                        <Col>
-                            <ToggleButtonGroup type="checkbox" value={filter} onChange={changeFilter}>
+                    <Grid container sx={{mt:2, mb:4, textAlign: "center" }} >
+                        <Grid item xs={12}>
+                            {/* <ToggleButtonGroup type="checkbox" value={filter} onChange={changeFilter}>
                                 <ToggleButton variant="toggle-kanji" id="kanji" value={"kanji"}>Kanji</ToggleButton>
                                 <ToggleButton className="toggle-word" id="words" value={"words"}>Words</ToggleButton>
-                            </ToggleButtonGroup>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Masonry
-                            breakpointCols={breakpointColumnsObj}
-                            className="masonry-grid"
-                        >
-                            {cards.map((card, i) => (
-                                <span key={i}>
-                                    { card.wordSlug && filter.includes("words") && (
-                                        <WordSearchCard 
-                                            active={activeCard} 
-                                            setActiveCard={setActiveCard}
-                                            hit={card.data}
-                                            type={"word"} />
-                                    )}
-                                    { card.kanji && filter.includes("kanji") && (
-                                        <KanjiCard 
-                                            active={activeCard} 
-                                            setActiveCard={setActiveCard}
-                                            kanji={card.data} />
-                                    )}
-                                </span>
-                            ))}
-                        </Masonry>
-                    </Row>
+                            </ToggleButtonGroup> */}
+                        </Grid>
+                    </Grid>
+                    <Grid container>
+                        <Grid item xs={12}>
+                            <Masonry
+                                breakpointCols={breakpointColumnsObj}
+                                className="masonry-grid"
+                            >
+                                {cards.map((card, i) => {
+                                    console.log(card)
+                                    return (
+                                        <span key={i}>
+                                            { card.wordSlug && filter.includes("words") && (
+                                                <WordSearchCard 
+                                                    active={activeCard} 
+                                                    setActiveCard={setActiveCard}
+                                                    hit={card.data}
+                                                    type={"word"} />
+                                            )}
+                                            { card.kanji && filter.includes("kanji") && (
+                                                <KanjiCard 
+                                                    active={activeCard} 
+                                                    setActiveCard={setActiveCard}
+                                                    kanji={card.data} />
+                                            )}
+                                        </span>
+                                    )})}
+                            </Masonry>
+                        </Grid>
+                    </Grid>
                 
                 </>
-            )}
-
-            { !cards && (
-                <Row style={{textAlign:"center"}}>
-                    <Col className="my-5" xs={12}>
-                        <Spinner animation="border" role="status">
-                            <span className="visually-hidden">Retrieving ...</span>
-                        </Spinner>
-                    </Col>
-                </Row>
             )}
         </>
     )

@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/react-in-jsx-scope */
-import { Grid, CircularProgress, Alert, Link } from "@material-ui/core"
+import { Grid, CircularProgress, Alert, Link, ToggleButtonGroup, ToggleButton } from "@material-ui/core"
 import { useEffect, useState } from "react"
 import { useAuth0 } from "@auth0/auth0-react"
 import Header from "../header"
@@ -14,8 +14,7 @@ const DecksPage = () => {
 
     const [ cards, setCards ] = useState(null)
     const [ activeCard, setActiveCard ] = useState(null)
-    // const [ filter, setFilter ] = useState([ "kanji", "words" ])
-    const filter = ["kanji", "words"]
+    const [ filter, setFilter ] = useState([ "kanji", "words" ])
     const { user } = useAuth0()
     
     const breakpointColumnsObj = {
@@ -70,10 +69,13 @@ const DecksPage = () => {
                 <>
                     <Grid container sx={{mt:2, mb:4, textAlign: "center" }} >
                         <Grid item xs={12}>
-                            {/* <ToggleButtonGroup type="checkbox" value={filter} onChange={changeFilter}>
-                                <ToggleButton variant="toggle-kanji" id="kanji" value={"kanji"}>Kanji</ToggleButton>
-                                <ToggleButton className="toggle-word" id="words" value={"words"}>Words</ToggleButton>
-                            </ToggleButtonGroup> */}
+                            <ToggleButtonGroup variant="contained" color="primary"
+                                value={filter}
+                                onChange={(e, f) => { setFilter (f) }}
+                            >
+                                <ToggleButton value="kanji">Kanji</ToggleButton>
+                                <ToggleButton value="words">Words</ToggleButton>
+                            </ToggleButtonGroup>
                         </Grid>
                     </Grid>
                     <Grid container>

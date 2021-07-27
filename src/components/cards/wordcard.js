@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/react-in-jsx-scope */
-import { Card, Collapse, CardHeader, Typography, Grid } from "@material-ui/core"
+import { Card, CardContent, Collapse, CardHeader, Typography, Grid } from "@material-ui/core"
 import WordCardBody from "./card-bodies/word-card-body"
 import StarToggle from "./startoggle"
 
@@ -13,7 +13,7 @@ const WordCard = ({active, setActiveCard, hit}) => {
     const subtitleColor = isActive ? "white" : "rgba(0, 0, 0, 0.6)"
 
     return (
-        <Grid item sx={{mb: 2, px: 1}} >
+        <Grid item sx={{ px: 1, my: 1 }} >
             <Card sx={{ backgroundColor: bg, color: col }}
                 aria-controls="card-body-collapse"
                 aria-expanded={isActive}
@@ -24,9 +24,9 @@ const WordCard = ({active, setActiveCard, hit}) => {
                     subheader={<Typography sx={{color: subtitleColor}}>{hit.japanese[0].reading}</Typography>}
                     action={<StarToggle cardInfo={hit} />} />
                 <Collapse in={isActive}>
-                    <div id="card-body-collapse">
+                    <CardContent sx={{p: 0, m: 0}}>
                         <WordCardBody data={hit} />
-                    </div>
+                    </CardContent>
                 </Collapse>
 
             </Card>

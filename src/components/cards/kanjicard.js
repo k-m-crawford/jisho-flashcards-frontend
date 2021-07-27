@@ -13,7 +13,7 @@ const KanjiCard = ({ kanji, active, setActiveCard }) => {
     const subtitleColor = isActive ? "" : "text-muted"
 
     return (
-        <Grid item sx={{mb: 2, px: 1}} >
+        <Grid item sx={{ px: 1, my: 1 }} xs={12} >
             <Card sx={{ backgroundColor: bg, color: col }}
                 aria-controls="card-body-collapse"
                 aria-expanded={isActive}

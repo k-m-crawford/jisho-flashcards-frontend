@@ -2,6 +2,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable react/react-in-jsx-scope */
 import { useState } from "react"
+import { Grid } from "@material-ui/core"
 import Masonry from "react-masonry-css"
 import WordSearchCard from "../cards/wordcard"
 import KanjiCard from "../cards/kanjicard"
@@ -18,7 +19,7 @@ const SearchResults = ({hits}) => {
     }
 
     return (
-        <>
+        <Grid container sx={{mt: 1}}>
             { hits.constructor === Array && hits.length > 0 &&
             <Masonry
             	breakpointCols={breakpointColumnsObj}
@@ -41,7 +42,7 @@ const SearchResults = ({hits}) => {
             	kanji={hits}
             />
             }
-        </>
+        </Grid>
     )
 
 }

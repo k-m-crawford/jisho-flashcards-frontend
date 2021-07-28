@@ -13,11 +13,11 @@ const WordCardBody = (data) => {
                     {data.data.senses.map((sense, i)=> (
                         <ListItem key={i} sx={{ backgroundColor: "white"}}>
                             <div>
-                                <Typography className="text-muted">{i + 1}.&nbsp;</Typography>
+                                <Typography sx={{color: "rgba(0, 0, 0, 0.6)"}}>{i + 1}.&nbsp;</Typography>
                             </div>
                             <div>
-                                <Typography sx={{fontSize: "smaller"}}>{ sense.parts_of_speech.map((pos, i) => (
-                                    <span key={i} className="text-muted">
+                                <Typography sx={{fontSize: "smaller", color: "rgba(0, 0, 0, 0.6)"}}>{ sense.parts_of_speech.map((pos, i) => (
+                                    <span key={i}>
                                         {pos + (i === sense.parts_of_speech.length - 1 ? "" : "; ")}
                                     </span>
                                 ))}</Typography>

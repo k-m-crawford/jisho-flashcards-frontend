@@ -67,8 +67,8 @@ const App = () => {
                 { !isLoading && !isAuthenticated && (
                     <>
                         <Header />
-                        <Grid container justifyContent="center" spacing={2}>
-                            <Grid item xs={1}>
+                        <Grid container sx={{textAlign: "center"}} spacing={2}>
+                            <Grid item xs={12}>
                                 <LoginButton />
                             </Grid>
                         </Grid>

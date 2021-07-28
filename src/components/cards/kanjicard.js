@@ -10,7 +10,7 @@ const KanjiCard = ({ kanji, active, setActiveCard }) => {
     const isActive = active === kanji.query
     const bg = isActive ? process.env.REACT_APP_KANJI_COLOUR : "white"
     const col = isActive ? "white" : "black"
-    const subtitleColor = isActive ? "" : "text-muted"
+    const subtitleColor = isActive ? "" : "rgba(0, 0, 0, 0.6)"
 
     return (
         <Grid item sx={{ px: 1, my: 1 }} xs={12} >

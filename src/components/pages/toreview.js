@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
 /* eslint-disable react/react-in-jsx-scope */
-import { Grid, CircularProgress, Card, CardHeader, CardContent, Button, Typography } from "@material-ui/core"
+import { Grid, CircularProgress, Card, CardHeader, CardContent, Button, Typography, Link  } from "@material-ui/core"
 import { useAuth0 } from "@auth0/auth0-react"
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
 
 const ToReview = ({reviewType, color}) => {
 
@@ -51,10 +50,13 @@ const ToReview = ({reviewType, color}) => {
                         <>
                             <Typography color="white" variant="h2">{count}</Typography>
                             { count !== 0 && (
-                                <Button component={Link}
-                                    to={`/review/${reviewType}`} 
+                                <Button
+                                    href={`/review/${reviewType}`} 
                                     variant="outlined" 
-                                    sx={{width: "100%", color: "white", borderColor: "white"}}>
+                                    color="default" 
+                                    sx={{width: "100%"}}
+                                    component={Link}
+                                >
                                             Review!
                                 </Button>
                             )}

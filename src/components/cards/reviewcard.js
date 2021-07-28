@@ -145,11 +145,8 @@ const ReviewCard = ({reviewType}) => {
                     
                     <Collapse in={bodyExpanded}> 
                         <CardContent>
-                            <Paper elevation={4}>
-                                { cardData.kanji && ( <KanjiCardBody data={cardData.data} /> ) }
-                                { cardData.wordSlug && ( <WordCardBody data={cardData.data} /> ) } 
-                            </Paper>
-                            
+                            { cardData.kanji && ( <KanjiCardBody data={cardData.data} /> ) }
+                            { cardData.wordSlug && ( <WordCardBody data={cardData.data} /> ) } 
                             <Grid container spacing={2} sx={{justifyContent: "center", mt: 1}}>
                                 <Grid item>
                                     <Button onClick={() => updateReview(level + 1)} variant="contained" >Correct</Button>

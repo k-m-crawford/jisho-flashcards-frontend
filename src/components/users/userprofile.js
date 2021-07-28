@@ -24,7 +24,7 @@ const UserProfile = ({ badge }) => {
                     keepMounted
                     open={Boolean(anchorEl)}
                     onClose={handleClose}>
-                    <MenuItem component={Link} color="primary" href="/decks">Decks</MenuItem>
+                    <MenuItem component={Link} color="inherit" href="/decks">Decks</MenuItem>
                     <MenuItem><Link underline="none" href="/decks" color="inherit">Profile</Link></MenuItem>
                     <MenuItem onClick={(e) => { e.preventDefault(); logout({ returnTo: window.location.origin }) }}>Logout</MenuItem>
                 </Menu>
